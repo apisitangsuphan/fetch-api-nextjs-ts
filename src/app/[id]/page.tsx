@@ -31,8 +31,8 @@ async function page({ params }: myParams) {
       <Card >
         <CardMedia
           sx={{ height: 450 }}
-          image={data.attraction.coverimage}
-          title={data.attraction.name}
+          image={data?.attraction.coverimage}
+          title={data?.attraction.name}
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
