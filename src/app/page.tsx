@@ -27,7 +27,7 @@ async function getData() {
 }
 export default async function Home() {
   const data = await getData();
-  console.log(data);
+
   return (
     <Container maxWidth="md" className="my-20">
 
@@ -53,7 +53,7 @@ export default async function Home() {
                   </Typography>
                 </CardContent>
                 <CardActions>
-                  <Link href={"/" + a.id}>Learn More</Link>
+                  <Link href={"/" + a.id} className="hover:text-sky-400">Learn More</Link>
                 </CardActions>
               </Card>
             </Grid>
