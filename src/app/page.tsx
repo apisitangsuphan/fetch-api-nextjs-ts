@@ -33,7 +33,7 @@ export default async function Home() {
   const data = await getData();
   console.log(data);
   return (
-    <Container maxWidth="md" className="mt-20 bg-linear-45 from-sky-400 to-cyan-600">
+    <Container maxWidth="md" className="my-20">
 
       <Grid container spacing={4}>
         {data.map((a: Attraction) => {

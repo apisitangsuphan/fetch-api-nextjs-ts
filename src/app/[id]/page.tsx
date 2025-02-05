@@ -30,10 +30,10 @@ async function page({ params }: myParams) {
   const data = await getData(params.id);
   console.log(data);
   return (
-    <Container maxWidth="lg" className="mt-10">
+    <Container maxWidth="lg" className="mt-10 bg-cyan-100">
       <Card >
         <CardMedia
-          sx={{ height: 140 }}
+          sx={{ height: 450 }}
           image={data.attraction.coverimage}
           title={data.attraction.name}
         />
