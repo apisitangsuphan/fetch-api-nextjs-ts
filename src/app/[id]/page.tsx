@@ -7,13 +7,22 @@ import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 
+// Define the structure of the attraction data
+interface Attraction {
+  attraction: {
+    name: string;
+    detail: string;
+    coverimage: string;
+  };
+}
+
 interface MyParams {
   params: Promise<{
     id: string;
   }>;
 }
 
-async function getData(id: string) {
+async function getData(id: string): Promise<Attraction> {
   const res = await fetch(`https://www.melivecode.com/api/attractions/${id}`);
   if (!res.ok) {
     throw new Error("Failed to fetch data from id: " + id);
@@ -22,7 +31,7 @@ async function getData(id: string) {
 }
 
 function Page({ params }: MyParams) {
-  const [data, setData] = useState<any>(null);
+  const [data, setData] = useState<Attraction | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
