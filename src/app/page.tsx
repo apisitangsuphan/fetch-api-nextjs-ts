@@ -33,9 +33,9 @@ export default async function Home() {
   const data = await getData();
   console.log(data);
   return (
-    <Container maxWidth="md">
-     
-      <Grid container spacing={2}>
+    <Container maxWidth="md" className="mt-20 bg-linear-45 from-sky-400 to-cyan-600">
+
+      <Grid container spacing={4}>
         {data.map((a: Attraction) => {
           return (
             <Grid item xs={12} md={4} key={a.id}>
