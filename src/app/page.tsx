@@ -1,7 +1,7 @@
 "use client";
-import * as React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
-//From MUI
+// From MUI
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
@@ -18,6 +18,7 @@ interface Attraction {
   latitude: number;
   longitude: number;
 }
+
 async function getData() {
   const res = await fetch("https://melivecode.com/api/attractions");
   if (!res.ok) {
@@ -25,35 +26,50 @@ async function getData() {
   }
   return res.json();
 }
-export default async function Home() {
-  const data = await getData();
+
+export default function Home() {
+  const [data, setData] = useState<Attraction[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getData();
+        setData(data);
+      } catch (err: any) {
+        setError(err.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (loading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error}</div>;
 
   return (
     <Container maxWidth="md" className="my-20">
-
       <Grid container spacing={4}>
         {data.map((a: Attraction) => {
           return (
             <Grid item xs={12} md={4} key={a.id}>
-              {" "}
               <Card>
-                <CardMedia
-                  sx={{ height: 140 }}
-                  image={a.coverimage}
-                  title={a.name}
-                />
+                <CardMedia sx={{ height: 140 }} image={a.coverimage} title={a.name} />
                 <CardContent>
                   <Typography gutterBottom variant="h5" component="div" className="truncate">
                     {a.name}
                   </Typography>
                   <Typography variant="body2" sx={{ color: "text.secondary" }}>
-                    {a.detail.length > 120
-                      ? a.detail.slice(0, 120) + "..."
-                      : a.detail}
+                    {a.detail.length > 120 ? a.detail.slice(0, 120) + "..." : a.detail}
                   </Typography>
                 </CardContent>
                 <CardActions>
-                  <Link href={"/" + a.id} className="hover:text-sky-400">Learn More</Link>
+                  <Link href={"/" + a.id} className="hover:text-sky-400">
+                    Learn More
+                  </Link>
                 </CardActions>
               </Card>
             </Grid>
