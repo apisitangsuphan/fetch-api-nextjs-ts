@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect,use } from "react";
+import React, { useState, useEffect, use } from "react";
 // MUI
 import Container from "@mui/material/Container";
 import Card from "@mui/material/Card";
@@ -30,7 +30,6 @@ function Page({ params }: MyParams) {
 
   const fetchData = async () => {
     try {
-      // Unwrap the params Promise here
       const res = await fetch(
         `https://www.melivecode.com/api/attractions/${id}`
       );
@@ -38,9 +37,7 @@ function Page({ params }: MyParams) {
       setData(predata);
       console.log("Its try process");
     } catch (err: unknown) {
-      setError(
-        err instanceof Error ? err.message : "An unknown error occurred"
-      );
+      throw new Error("Cant fetch data")
     } finally {
       setLoading(false);
     }
@@ -67,10 +64,10 @@ function Page({ params }: MyParams) {
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="div">
-            {data?.attraction.name}
+            {data?.attraction?.name}
           </Typography>
           <Typography variant="body2" sx={{ color: "text.secondary" }}>
-            {data?.attraction.detail}
+            {data?.attraction?.detail}
           </Typography>
         </CardContent>
       </Card>
