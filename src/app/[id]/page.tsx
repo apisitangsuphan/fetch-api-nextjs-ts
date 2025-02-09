@@ -42,8 +42,9 @@ function Page({ params }: MyParams) {
         const { id } = await params;  // Unwrap params object
         const data = await getData(id);  // Use the unwrapped id
         setData(data);
-      } catch (err: any) {
-        setError(err.message);
+      } catch (err: unknown) {3
+        setError(err instanceof Error? err.message : "An unknown error occurred");
+      
       } finally {
         setLoading(false);
       }
