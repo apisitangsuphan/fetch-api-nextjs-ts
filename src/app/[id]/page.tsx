@@ -37,6 +37,9 @@ function Page({ params }: MyParams) {
       setData(predata);
       console.log("Its try process");
     } catch (err: unknown) {
+      setError(
+        err instanceof Error? err.message : "An unknown error occurred"
+      );
       throw new Error("Cant fetch data")
     } finally {
       setLoading(false);
