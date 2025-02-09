@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,use } from "react";
 // MUI
 import Container from "@mui/material/Container";
 import Card from "@mui/material/Card";
@@ -23,36 +23,31 @@ interface MyParams {
 }
 
 function Page({ params }: MyParams) {
+  const { id } = use(params);
   const [data, setData] = useState<Attraction | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  async function getData(id: string): Promise<Attraction> {
-    const res = await fetch(`https://www.melivecode.com/api/attractions/${id}`);
-    if (!res.ok) {
-      throw new Error("Failed to fetch data from id: " + id);
+  const fetchData = async () => {
+    try {
+      // Unwrap the params Promise here
+      const res = await fetch(
+        `https://www.melivecode.com/api/attractions/${id}`
+      );
+      const predata = await res.json();
+      setData(predata);
+      console.log("Its try process");
+    } catch (err: unknown) {
+      setError(
+        err instanceof Error ? err.message : "An unknown error occurred"
+      );
+    } finally {
+      setLoading(false);
     }
-    return res.json();
-  }
-
+  };
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // Unwrap the params Promise here
-        const { id } = await params; // Unwrap params object
-        const data = await getData(id); // Use the unwrapped id
-        setData(data);
-      } catch (err: unknown) {
-        setError(
-          err instanceof Error ? err.message : "An unknown error occurred"
-        );
-      } finally {
-        setLoading(false);
-      }
-    };
-
     fetchData();
-  }, [params]); // params is now unwrapped and accessible as an object
+  }, [id]);
 
   if (loading) {
     return <div>Loading...</div>;
