@@ -71,7 +71,7 @@ export default function Home() {
                   </Typography>
                 </CardContent>
                 <CardActions>
-                  <Link href={"/" + a.id} className="hover:text-sky-400">
+                  <Link href={"/" + a.id} className="hover:text-sky-400 p-3 border-1 border-gray-400">
                     Learn More
                   </Link>
                 </CardActions>

@@ -17,11 +17,10 @@ interface Attraction {
 }
 
 interface MyParams {
-  params:{
+  params: {
     id: string;
   };
 }
-
 
 function Page({ params }: MyParams) {
   const [data, setData] = useState<Attraction | null>(null);
@@ -37,7 +36,6 @@ function Page({ params }: MyParams) {
   }
 
   useEffect(() => {
-    
     const fetchData = async () => {
       try {
         // Unwrap the params Promise here
