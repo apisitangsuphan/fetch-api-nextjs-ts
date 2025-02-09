@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import React, { useState, useEffect } from "react";
 // MUI
 import Container from "@mui/material/Container";
@@ -17,41 +17,44 @@ interface Attraction {
 }
 
 interface MyParams {
-  params: Promise<{
+  params:{
     id: string;
-  }>;
+  };
 }
 
-async function getData(id: string): Promise<Attraction> {
-  const res = await fetch(`https://www.melivecode.com/api/attractions/${id}`);
-  if (!res.ok) {
-    throw new Error("Failed to fetch data from id: " + id);
-  }
-  return res.json();
-}
 
 function Page({ params }: MyParams) {
   const [data, setData] = useState<Attraction | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
+  async function getData(id: string): Promise<Attraction> {
+    const res = await fetch(`https://www.melivecode.com/api/attractions/${id}`);
+    if (!res.ok) {
+      throw new Error("Failed to fetch data from id: " + id);
+    }
+    return res.json();
+  }
+
   useEffect(() => {
+    
     const fetchData = async () => {
       try {
         // Unwrap the params Promise here
-        const { id } = await params;  // Unwrap params object
-        const data = await getData(id);  // Use the unwrapped id
+        const { id } = await params; // Unwrap params object
+        const data = await getData(id); // Use the unwrapped id
         setData(data);
-      } catch (err: unknown) {3
-        setError(err instanceof Error? err.message : "An unknown error occurred");
-      
+      } catch (err: unknown) {
+        setError(
+          err instanceof Error ? err.message : "An unknown error occurred"
+        );
       } finally {
         setLoading(false);
       }
     };
 
     fetchData();
-  }, [params]);  // params is now unwrapped and accessible as an object
+  }, [params]); // params is now unwrapped and accessible as an object
 
   if (loading) {
     return <div>Loading...</div>;
