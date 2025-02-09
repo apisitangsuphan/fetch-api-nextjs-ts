@@ -17,9 +17,9 @@ interface Attraction {
 }
 
 interface MyParams {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 function Page({ params }: MyParams) {
