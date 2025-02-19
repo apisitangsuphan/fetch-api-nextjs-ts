@@ -29,7 +29,7 @@ async function getData() {
 
 export default function Home() {
   const [data, setData] = useState<Attraction[]>([]);
-  const [loading, setLoading] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
